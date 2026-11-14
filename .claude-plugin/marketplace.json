@@ -1,0 +1,15 @@
+{
+  "name": "video-edit-copilot",
+  "description": "Install Video Edit Copilot from GitHub or from this folder.",
+  "owner": {
+    "name": "Billy So"
+  },
+  "plugins": [
+    {
+      "name": "video-edit-copilot",
+      "source": "./",
+      "description": "Sort your footage, get a fast first cut in your own video app, refine it as far as you want, and package it for upload.",
+      "version": "0.3.0"
+    }
+  ]
+}
