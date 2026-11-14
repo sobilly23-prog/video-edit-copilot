@@ -8,7 +8,7 @@ It isn't an auto-editor. Think of it as a storyboard and a first draft, plus a q
 
 ## Why I made this
 
-I came back from a three-week trip with hours of footage and no time to edit it. I'd seen a creator's Instagram Edits + Claude workflow and tried it myself, with Claude Code connected to Edits on my Mac.
+I came back from a three-week trip with hours of footage and no time to edit it. Then a friend told me that Instagram's Edits app now has a desktop version for Mac with MCP support, which means Claude can work inside it. I decided to try it out, with Claude Code connected to Edits on my Mac.
 
 Over a few days we made a 30-minute film. Three things surprised me:
 - **How much the early steps helped the storytelling.** With the footage sorted into a folder per day and place, every clip on one page, the colour converted and a rough cut in hand, I could see the story long before I'd have found it scrubbing through clips.
