@@ -8,12 +8,12 @@ It isn't an auto-editor. Think of it as a storyboard and a first draft, plus a q
 
 ## Why I made this
 
-I came back from a week-long trip with hours of footage and no time to edit it. I'd seen a creator's Instagram Edits + Claude workflow and tried it myself, with Claude Code connected to Edits on my Mac.
+I came back from a three-week trip with hours of footage and no time to edit it. I'd seen a creator's Instagram Edits + Claude workflow and tried it myself, with Claude Code connected to Edits on my Mac.
 
 Over a few days we made a 30-minute film. Three things surprised me:
 - **How much the early steps helped the storytelling.** With the footage sorted into a folder per day and place, every clip on one page, the colour converted and a rough cut in hand, I could see the story long before I'd have found it scrubbing through clips.
 - **How much faster it is with someone who knows the app.** I could ask for things I didn't know how to do in the editor (blur a face that moves through a shot, change every caption at once) and get on with the story.
-- **That the edit kept getting more like mine.** Day 1 took seven rounds of corrections. By the end of the week, a review of the whole film was a page of notes, and the notes kept getting smaller. Every correction was saved with the reason behind it.
+- **That the edit kept getting more like mine.** Day 1 took seven rounds of corrections. By the end of the first week of editing, a review of the whole film was a page of notes, and the notes kept getting smaller. Every correction was saved with the reason behind it.
 
 The first version of this plugin started with a 15-minute questionnaire about your taste. This one flips that around: it shows you a first cut, then asks how you'd like to refine it. It's much easier to say what you want once you've watched something.
 
