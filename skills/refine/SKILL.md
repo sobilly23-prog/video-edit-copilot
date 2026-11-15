@@ -42,8 +42,8 @@ Recommend one option. Write each answer into the taste profile as a rule with it
   before writing anything.
 - **Never undo the user's edits.** Take a snapshot when they hand back, diff it, and treat their version as the
   baseline (see the `learn` skill).
-- **Verify with the real result,** not the app's readback: export frames, loudness, a caption check. Readbacks
-  sometimes report a move or trim that didn't happen.
+- **Verify with the real result,** not the app's readback: export frames, a caption check, and the sound check.
+  Readbacks sometimes report a move or trim that didn't happen.
 - **Report honestly:** what's done, what's checked, what isn't, and what you guessed.
 
 ## 2. Analyse (read-only, for new material or a new area)
@@ -81,15 +81,18 @@ Show the user the short version. **Stop.**
 
 1. Check the user is idle. Snapshot the project first (`video-edit-copilot/snapshots/`).
 2. Copy the source clips you'll use into the working media folder.
-3. Import, trim and order the clips. Then **re-read the order from the app and compare it with the plan**: some apps
-   insert at the playhead or shuffle clips after an import. In Edits:
+3. **Waveform cuts first:** move the plan's in and out points onto the quietest moment nearby, out of speech
+   (`references/music-and-sound.md`; in Edits, `waveform_cuts.py plan.json --transcripts <folder>`).
+   Then import, trim and order the clips, and **re-read the order from the app and compare it with the plan**: some
+   apps insert at the playhead or shuffle clips after an import. In Edits:
    - for a new section at the end, `build_cut.py`
    - for a shot in the middle, `ripple_edit.py` (insert or extend)
    Both check what they did.
 4. **Colour first:** convert log footage, add the finishing look if any, and keep phone footage out of the camera's
    conversion. Never hand over grey, flat footage.
 5. **Sound:** set clip volumes from loudness (`references/music-and-sound.md`). Mute or avoid companion speech per the
-   profile. Add short audio fades between clips.
+   profile. Give every silent picture (a still, a title card) a sound bed. Add the 2-frame audio fades at every cut
+   where the sound jumps (`audio_fades.py` in Edits).
 6. **Captions** per the profile and `references/captions.md`. Then run the caption check: no overlaps, a minimum time
    on screen, starts and ends on cuts, centred where they should be.
 7. **Music** per `references/music-and-sound.md`. Music doesn't ripple when picture changes, so place it after the
@@ -104,7 +107,9 @@ Show the user the short version. **Stop.**
 - **Export frames** across every changed section, as a contact sheet. Look at colour, captions, order, and the start
   and end of each shot.
 - Run the caption check (from the playbook scripts).
-- Check loudness across quick cuts. Aim for no big jumps.
+- **Run the sound check** (`references/music-and-sound.md`): render the changed stretch, scan it, re-run the audio
+  fades and the waveform slip, and give every finding a verdict. Fix the accidental ones, keep the intentional ones,
+  and put the unsure ones on the review page with sound clips.
 - **Compare against the decision log:** every planned shot is there, in order, with the agreed ranges.
 - Fix what you find, then check again.
 
@@ -113,7 +118,7 @@ Show the user the short version. **Stop.**
 - Snapshot the project. This is the "before" for the `learn` skill.
 - Tell the user, briefly:
   - what changed and the new length
-  - what you verified and how
+  - what you verified and how, including the sound check line
   - what's unverified
   - the open questions
   - the link to any options page
@@ -125,11 +130,13 @@ Show the user the short version. **Stop.**
 Only when they want to:
 - Build later sections into the same project, after the last one, with a chapter card if the profile has them.
 - After any change of length (theirs or yours), re-fit what doesn't move by itself: music, spanning colour layers,
-  captions on moved shots. Also re-fit the last song to the film's end.
+  captions on moved shots. Also re-fit the last song to the film's end. Then run the sound check again: re-fits and
+  the user's trims move sound seams.
 - Final passes before export:
   - a music pass
   - a caption pass (wording, timing, centring)
   - a colour check on every phone insert
+  - the **whole-film sound check** (every chapter and every seam between chapters)
   - a **privacy pass:** check every shot of every scene where someone needs hiding, not just the shots already flagged.
     One missed shot means exporting again and, once it's online, uploading again.
   - the end
@@ -139,8 +146,8 @@ Only when they want to:
 ## Done when (each round)
 
 - The decision log was approved before anything bigger than a small fix was built.
-- Export frames, the caption check and loudness were checked against the decision log, and anything unverified is
-  named.
+- Export frames, the caption check and the sound check were run against the decision log, the decision log has its
+  "Sound check" line, and anything unverified is named.
 - A fresh snapshot is saved as the next "before", and the user was asked where to next.
 
 ## References
@@ -148,5 +155,6 @@ Only when they want to:
 - `references/video-types.md`: long-form, short-form, both, and how to learn a new type from the user's examples.
 - `references/craft-lessons.md`: the editing lessons that came from real review rounds. Read before the first build.
 - `references/captions.md`: caption jobs, wording, timing, look.
-- `references/music-and-sound.md`: when to use music, levels, cutting on silence.
+- `references/music-and-sound.md`: when to use music, levels, waveform cuts and audio fades, silence and dead air,
+  and the sound check.
 - `references/phone-footage.md`: inserts, stills, colour and clocks.

@@ -70,8 +70,9 @@ The taste profile (including any style brief from their examples) overrides all 
 - **Leave out** shaky, blurred or blocked shots, repeat takes, and anything with conversation.
 - **Hard cuts,** a fade at the very end.
 - **Sound:** each clip's own sound, evened out across cuts with **base 1.0** (there's no music yet, so the clips carry
-  it: `references/music-and-sound.md` in `refine`). Every clip gets a 2-frame audio fade. **No music yet:** it's placed
-  once the picture settles, and choosing it is a refinement.
+  it: `references/music-and-sound.md` in `refine`). Cuts land on the quietest moment nearby, never in a word, and
+  every clip gets a 2-frame audio fade. **No music yet:** it's placed once the picture settles, and choosing it is a
+  refinement.
 - **Labels:** the folder's place name on the first shot of each scene, so the storyboard reads.
   - On screen it's just the name. The decision log marks every label as a working title: names, spellings and
     addresses get checked in `refine`.
@@ -89,8 +90,9 @@ The taste profile (including any style brief from their examples) overrides all 
 2. **Project settings:** the frame from the video type (`setCanvas`: 16:9, or 9:16 for short-form) before importing
    anything. For log footage in Edits, set the project to SDR.
 3. **Write the plan and build it.** Plan format: `{"scenes": [{"label": "...", "shots": [{"file", "in", "out"}]}]}`.
-   For Edits:
+   First move its cuts onto quiet moments (it reads the source files only), then build. For Edits:
    ```
+   python3 -I <edits-playbook folder>/scripts/waveform_cuts.py plan.json [--transcripts <transcripts folder>]
    python3 -I <edits-playbook folder>/scripts/build_cut.py "<exact title>" plan.json --labels --level first --fade-out 3
    ```
    - It copies each clip into the working media folder (never touching the originals), then appends, trims and checks
@@ -119,6 +121,10 @@ The taste profile (including any style brief from their examples) overrides all 
      whites mean the wrong conversion
    - `caption_check.py`
    - the total length
+   - **the sound check** (`references/music-and-sound.md` in `refine`). A first cut is short, so render all of it
+     (`render_audio.py`, about real time) and run `sound_scan.py` on it with the snapshot. With no music yet, the usual
+     finds are a shot that's almost silent and a hard jump in level on a cut. Fix the accidental ones and note the
+     rest in the decision log's "Sound check" line.
 6. **Snapshot** the project into `video-edit-copilot/snapshots/first-cut.json`. It's the baseline `learn` compares
    against when the user edits it.
 7. **Decision log:** save a short `video-edit-copilot/decision-logs/first-cut.md` covering:

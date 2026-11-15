@@ -1,6 +1,6 @@
 ---
 name: edits-playbook
-description: Instagram Edits (Mac) specifics for Video Edit Copilot - connecting its local MCP server, the helper scripts (cut builder, snapshot, diff, wait-until-idle, safe delete, export-true frames, clean graded frames, caption check, music and layer re-fit, ripple insert/extend, loudness-matched volume), the colour recipe, music workflow, and the app's known quirks. Use whenever the copilot edits in Instagram Edits, or when an Edits tool call behaves unexpectedly.
+description: Instagram Edits (Mac) specifics for Video Edit Copilot - connecting its local MCP server, the helper scripts (cut builder, snapshot, diff, wait-until-idle, safe delete, export-true frames, clean graded frames, caption check, music and layer re-fit, ripple insert/extend, loudness-matched volume, and the sound check: waveform cuts, audio fades, audio render and sound scan), the colour recipe, music workflow, and the app's known quirks. Use whenever the copilot edits in Instagram Edits, or when an Edits tool call behaves unexpectedly.
 ---
 
 # Instagram Edits playbook
@@ -48,6 +48,11 @@ Run them from the project folder: `python3 -I <this skill's folder>/scripts/<scr
 | `remap_layers.py "Title" old.json [--dry]` | Re-fits music and adjustment layers to their scenes after clips change length. |
 | `ripple_edit.py "Title" insert/extend/els …` | Insert a trimmed clip before a given clip, or lengthen one, and report everything that moved. |
 | `loudness_volume.py file in out` | LUFS of a range and the volume that evens out quick cuts. |
+| `waveform_cuts.py plan.json [--transcripts dir] [--dry]` | Before building: moves the plan's cuts onto the quietest moment nearby, out of speech. Reads source files only. |
+| `audio_fades.py "Title" t0 t1 [--check]` | 2-frame audio fades at every cut where the sound jumps (none on a continuous split). `--check` audits without changing anything. |
+| `waveform_slip.py "Title" t0 t1 --dry [--mine build-log.json]` | On the built film: slips shots so their cuts land on quiet moments, without moving anything else. Lists the user's own cuts instead of changing them. |
+| `render_audio.py out.wav start length "Title"` | Renders a stretch's real mix (volumes, fades, library songs) through the app's preview renderer. About real time. |
+| `sound_scan.py file [--start s] [--snapshot snap.json]` | Read-only: dropouts, near-silence, sounds cutting in or out, level jumps on cuts, each placed on a cut or mid-shot. Run on a render or the exported file. |
 | `export_watch.py [--path /Volumes/Drive]` | Watches an export the user started: progress, speed, time left, a drive that disappears. Keeps a Mac awake while it runs. |
 
 ## Building a section
@@ -88,6 +93,19 @@ testing). By hand:
 - **Ending:** a dissolve transition from the last clip with no "to" clip fades to black. Edits uses about **half** the
   stored duration, so a stored 5 s gives about 2.6 s. Fade the last clip's audio, and keep the music's fade at least as
   long as the picture's.
+
+## Sound in Edits
+
+The sound check itself is in `music-and-sound.md` (in `refine`). The Edits side of it:
+- `setFade` on a video clip fades its **audio** only. The picture stays a hard cut, which is what audio fades want.
+- `slipClip` changes which moment of the source a clip shows while keeping its place and length: the way to move a
+  cut onto a quiet moment without rippling captions and music.
+- `replaceElementMedia` swaps a clip's file and keeps its place and length. Use it to swap in a copy of a still with a
+  sound bed baked in, then set its volume and fades.
+- Library songs have no file you can read. To hear or measure them in the mix, render the stretch
+  (`render_audio.py`, which joins `previewVideo` renders of up to 10 s each).
+- `quietPoint` and `audioLevels` analyse a source file's sound too. The scripts read the files with ffmpeg instead, so
+  they work the same in any app.
 
 ## Exporting
 

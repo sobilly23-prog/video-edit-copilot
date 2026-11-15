@@ -64,18 +64,23 @@ the app playbook or `app-capabilities.md`, not the taste profile.
 Their edits are the new baseline. Never put back something they removed, re-lengthen something they trimmed, or
 reword something they wrote. But their edits often leave things out of line that they didn't intend:
 - **Music doesn't move** when picture changes length. Re-fit each section to its scene, from a snapshot taken when the
-  music was right.
+  music was right. If they rearranged the music themselves, their arrangement is the one to carry forward.
 - **Colour or effect layers that span a change don't stretch.** Re-fit them, then check none sits over the wrong shots.
   Phone footage stays out of the camera's log conversion.
 - **Captions can drift or vanish** with a trim. Re-seat them on their shots. Ask before restoring a deleted one.
 - **The last song should end with the film.**
 - **App artefacts:** a 1-frame sliver left by a trim, or a replaced clip reverted by an undo. Flag them. Don't delete
   their pieces. Re-apply your own swaps if they reverted.
+- **Sound seams move.** Their splits and trims add cuts with no audio fade, and moved music can leave dead air or a
+  sound cutting in. Re-run the sound check (`music-and-sound.md` in `refine`): add the missing 2-frame fades (that's
+  a mechanical repair), slip only your own cuts, and put anything about their own cuts or any silence you're unsure
+  of on the review page for them.
 
 ## 5. Apply the new rules forward
 
 Apply new rules to the parts the user hasn't reviewed yet. If a rule would change something they already reviewed,
-ask first. Then re-verify (export frames, caption check, loudness) and snapshot again: that's the new "before".
+ask first. Then re-verify (export frames, caption check, the sound check) and snapshot again: that's the new
+"before".
 
 ## 6. Tell them what you learned
 
@@ -86,7 +91,7 @@ read wrongly. A wrong rule repeated across a whole film costs more than asking.
 
 | Situation | Do |
 |---|---|
-| Mechanical repair after their edit (music, layers, caption timing) | Act, then report |
+| Mechanical repair after their edit (music, layers, caption timing, missing audio fades) | Act, then report |
 | A taste call with a few reasonable answers (wording, how long to hold, which shot) | Offer options on a picks page |
 | Anything personal (a line that sounds like their opinion, someone's name, a privacy call) | Ask |
 | A rule that would change something they already reviewed | Ask |

@@ -1,7 +1,7 @@
 """Build a caption picks page from a questions file (see ../SKILL.md for the format).
   python3 -I make_picks.py <questions.json> <out.html>
-Image paths in the questions file are relative to the questions file. Images are embedded as data: URIs
-(keep them about 640 px wide)."""
+Image and sound paths in the questions file are relative to the questions file. Both are embedded as data: URIs, so
+the page is one file: keep images about 640 px wide, and sound clips short (about 6 s, mp3 at 96 kbps)."""
 import sys, os, json, base64, html
 
 if len(sys.argv) < 3:
@@ -19,6 +19,10 @@ for q in src['questions']:
     q.setdefault('links', [])
     q.setdefault('note', '')
     q.setdefault('alt', q.get('title', ''))
+    # sound items: "audio": [{"label": "Now", "file": "now.mp3"}, {"label": "After the fix", "file": "after.mp3"}]
+    q['audio'] = [{'label': a['label'], 'src': 'data:audio/mpeg;base64,' + base64.b64encode(
+        open(a['file'] if os.path.isabs(a['file']) else os.path.join(base, a['file']), 'rb').read()).decode()}
+        for a in q.get('audio', [])]
     qs.append(q)
 t = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'picks_template.html')).read()
 data = json.dumps(qs, ensure_ascii=False).replace('</', '<\\/')

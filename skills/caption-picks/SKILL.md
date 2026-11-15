@@ -52,8 +52,14 @@ recommend. The user answers with letters, or types their own.
    - **Every question starts on option A, and "Copy my picks" sends A for any question the user didn't touch.** So for
      opt-in ideas ("add a closing shot here?"), make A the "no change" option. Otherwise an untouched idea reads as a
      yes.
+   - **Sound questions get sound clips.** A silence you weren't sure was meant, a level jump, a song change: a frame
+     can't show it. Add `"audio": [{"label": "Now", "file": "q03-now.mp3"}, {"label": "With the fix",
+     "file": "q03-fix.mp3"}]` to the question, each clip about 6 s around the moment. Cut them from a render
+     (`render_audio.py` in the playbook), then `ffmpeg -i in.wav -ss <s> -t 6 -b:a 96k q03-now.mp3`.
+   - **Everything the user needs to review goes on the page,** not in the chat message: each item with its timecode,
+     a frame and, for sound, the clips. The message links the page.
 3. Build it with `scripts/make_picks.py questions.json out.html` (in this skill's folder; it uses
-   `scripts/picks_template.html`). Images are embedded, so the page is one file.
+   `scripts/picks_template.html`). Images and sound clips are embedded, so the page is one file.
 4. **Share it.** If this session can publish a page (for example a Claude artifact), publish it and give the link.
    Otherwise open the HTML file locally.
 

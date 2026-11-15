@@ -9,7 +9,7 @@
       "name": "video-edit-copilot",
       "source": "./",
       "description": "Sort your footage, get a fast first cut in your own video app, refine it as far as you want, and package it for upload.",
-      "version": "0.3.0"
+      "version": "0.4.0"
     }
   ]
 }

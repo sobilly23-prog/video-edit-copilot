@@ -30,6 +30,8 @@ video file of an upload; see step 9). So check first:
 - **Music licences:** for YouTube, royalty-free only. In-app "licensed" music may only be cleared for that app's
   platform.
 - **The end** (fade, end card), and the film's length.
+- **Sound:** the whole-film sound check (`music-and-sound.md` in `refine`): every chapter and every seam between
+  chapters, the audio fades audit at zero missing, and every silence either meant or fixed.
 
 ## 2. Export
 
@@ -45,6 +47,9 @@ video file of an upload; see step 9). So check first:
 ## 3. Check the exported file
 
 - `ffprobe`: duration matches the project, resolution, frame rate, audio present.
+- **Scan the exported file's sound:** `sound_scan.py <exported file> --snapshot <final snapshot>`. Anything new since
+  the last check (a DROPOUT or CUT-IN that wasn't there before) gets fixed or flagged before upload. A MID-SHOT finding
+  that isn't in the source points at the render: export again.
 - Frames from the **exported file** (not the app) at each privacy fix and each caption changed since the last export.
 - Then tell the user it's ready, with the file path.
 

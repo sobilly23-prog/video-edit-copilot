@@ -1,6 +1,6 @@
 {
   "name": "video-edit-copilot",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "From a drive full of clips to a first cut you can watch, fast: sort your footage chronologically and see it on one page, get a quick preview or rough cut in your own video app through its MCP server, sort out colour with your camera's LUT, refine it as far as you want while it learns your taste, and package it for upload with thumbnail A/B tests.",
   "author": {
     "name": "Billy So"

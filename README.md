@@ -143,6 +143,8 @@ Some of the rules it ended up with for me, which are a good starting point for m
 - **One caption per idea.** Name things plainly and precisely. Never describe what's already on screen.
 - **Not everything needs music.** Where a place's own sound carries it, let it.
 - **Even out the sound across quick cuts.** A loud street next to a quiet café is jarring.
+- **Cut between words, and fade the sound at every cut.** A cut on the quietest moment nearby and a 2-frame audio fade stop sounds cutting in.
+- **Silence is fine when it's meant. Dead air by accident isn't:** a title card with no sound, or a muted shot under a quiet song, sounds like the video broke.
 
 ---
 
@@ -238,8 +240,9 @@ Rules it keeps:
   - a meal shown out of order
   - an app readback that said something had moved when it hadn't
   - a face I'd asked to blur, still visible in one more shot of the same scene
+  - sound that dropped out and sounds that cut in hard, which viewers noticed before I did
 
-  That's why it checks real export frames before calling anything done, and rescans every shot of a scene before the export.
+  That's why it checks real export frames before calling anything done, rescans every shot of a scene before the export, and ends every round with a sound check. Anything it isn't sure was meant, like a silence, goes on a review page with "now" and "with the fix" clips for you to decide.
 - **Exports take a while.** A 30-minute 4K film took about two hours in Edits, and twice that when the display went to sleep. Keep the display on, and keep any external drive plugged in.
 - **Long sessions are normal for a long film.** It keeps decision logs and notes as it goes, so the work survives a fresh session.
 - **Music:** for YouTube, use royalty-free tracks. In-app "licensed" music may only be cleared for that app's platform.
@@ -268,7 +271,7 @@ video-edit-copilot/
     package/               export checks, upload kit, thumbnails and A/B test plan (+ thumbnail renderer)
     interview/             optional up-front taste interview (+ the taste profile template)
     voiceover/             the three narration modes
-    edits-playbook/        Instagram Edits specifics, 14 helper scripts (incl. the cut builder), colour recipe, known quirks
+    edits-playbook/        Instagram Edits specifics, 19 helper scripts (incl. the cut builder and the sound check), colour recipe, known quirks
 ```
 
 ---

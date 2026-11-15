@@ -1,5 +1,52 @@
 # Changelog
 
+## 0.4.0 (2026-11)
+
+Sound editing, from real viewer feedback. Viewers of a finished film said the sound went silent in places and that
+some sounds "cut in". A scan of the exported file showed every one of those came from the edit, not the render: title
+cards with no sound, shots muted over a sparse song, and big level jumps on cuts. Sound is now checked, not assumed.
+
+**Required at every hand-over** (after the build, every review round, every pass of the user's own, and before export)
+- **Frame audio transitions:** a 2-frame audio fade at every cut where the sound jumps. A continuous split (one take cut
+  in two) gets none, since a fade there only makes a dip.
+- **Waveform cuts:** cuts land on the quietest moment within about ±0.25 s, between words and hits. Planned cuts are
+  moved before building. On a built film the copilot slips its own shots and puts the user's own cuts on the review
+  page instead of changing them.
+- **The sound check:** render the changed stretch (or take the export), scan it, and give every finding a verdict.
+  Intentional silence stays; accidental gaps, cut-ins and jumps get fixed; anything unsure is flagged for the user,
+  with "now" and "with the fix" sound clips on the review page. The decision log gets a "Sound check" line.
+
+**New rules** (`refine/references/music-and-sound.md`)
+- Silence is fine when it's meant.
+- Title and chapter cards need a sound bed. Trim a song's silent intro, or start the next song about 1 s early.
+- Mute to 0 only under a steady bed. Never let a sparse song intro be the only sound.
+- Every silent picture (a photo, a still, a title graphic) gets a bed baked into a copy of the clip.
+- No more than about 6 dB across any cut.
+- A place's own sound leads where it's the point. Draft fewer songs. The user's own music arrangement is the one
+  carried forward.
+
+**New scripts** (Edits playbook)
+- `sound_scan.py` (read-only): dropouts, near-silence, cut-ins and cut-outs, and level jumps on cuts, each placed on a
+  cut or mid-shot. It works on any audio or video file.
+- `waveform_cuts.py`: moves a plan's cuts onto quiet moments and out of speech before building. It reads source files
+  only.
+- `audio_fades.py`: adds the 2-frame fades. `--check` audits them without changing anything.
+- `waveform_slip.py`: slips built shots onto quiet moments without moving anything else. `--dry` first.
+- `render_audio.py`: renders a stretch's real mix (volumes, fades, library songs) through Edits' preview renderer.
+- `caption-picks`: picks pages can carry sound clips, so sound questions get "now" and "with the fix" clips.
+
+**Tested**
+- `sound_scan.py` gave the same findings as the original script it came from on a 30-minute export (159 findings,
+  type for type).
+- Run against the test project's own files: `waveform_cuts.py` (dry run: 27 cuts moved, plan untouched) and the
+  `audio_fades.py --check` audit.
+- The fades and slip logic were tested against a mocked app: continuous splits get no fade, and the user's own cuts
+  are listed, not changed.
+- `render_audio.py` and the picks page's audio player were ported unchanged in behaviour from the author's own tested
+  versions.
+- **Not yet tested live in the plugin:** the write paths of `audio_fades.py` and `waveform_slip.py`, and
+  `render_audio.py`.
+
 ## 0.3.0 (2026-11)
 
 From the first full test drive of 0.2.0 (setup → sort → first cut in Instagram Edits) and the reviewer's notes.

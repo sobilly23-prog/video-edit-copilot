@@ -18,7 +18,7 @@
   --bg: #141615; --panel: #1c1f1e; --fg: #ecebe7; --muted: #a29f98; --line: #2e3230;
   --accent: #8fc2b0; --accent-soft: #23302c; --pill: rgba(0,0,0,.6); color-scheme: dark }
 body { background: var(--bg); color: var(--fg); font-family: var(--sans); font-size: 15px; line-height: 1.5; }
-.wrap { max-width: 860px; margin: 0 auto; padding-block: 32px 120px;
+.wrap { max-width: 860px; margin: 0 auto; padding-block: 32px calc(var(--bar-h, 170px) + 32px);
   padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
   display: grid; gap: 28px; }
 header h1 { font-family: var(--serif); font-style: italic; font-weight: 400; font-size: clamp(34px, 6vw, 48px); line-height: 1.05; margin: 0; text-wrap: balance; }
@@ -45,13 +45,18 @@ header p { margin: 8px 0 0; color: var(--muted); max-width: 62ch; }
 .opt small { display: block; color: var(--muted); font-size: 12.5px; }
 .other { width: 100%; box-sizing: border-box; font: inherit; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; background: transparent; color: var(--fg); }
 .other:focus, .opt:focus-within { outline: 2px solid var(--accent); outline-offset: 1px; }
+.sounds { display: grid; gap: 8px; }
+.sounds figure { margin: 0; display: grid; gap: 4px; }
+.sounds figcaption { font-family: var(--mono); font-size: 11px; letter-spacing: .04em; color: var(--muted); }
+.sounds audio { width: 100%; height: 34px; }
+.sounds video { width: 100%; border-radius: 6px; background: #000; display: block; }
 .links { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 13px; }
 .links a { color: var(--accent); }
 .bar { position: fixed; left: 0; right: 0; bottom: 0; background: var(--panel); border-top: 1px solid var(--line);
   padding-block: 12px calc(12px + env(safe-area-inset-bottom, 0px));
   padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
 .bar .in { max-width: 860px; margin: 0 auto; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
-.bar code { font-family: var(--mono); font-size: 12px; color: var(--muted); flex: 1 1 320px; min-width: 0; overflow-wrap: anywhere; }
+.bar code { font-family: var(--mono); font-size: 12px; color: var(--muted); flex: 1 1 320px; min-width: 0; overflow-wrap: anywhere; max-height: 6em; overflow-y: auto; overscroll-behavior: contain; }
 button { font: inherit; font-weight: 600; background: var(--accent); color: var(--panel); border: 0; border-radius: 8px; padding: 10px 16px; cursor: pointer; }
 button:focus-visible { outline: 2px solid var(--fg); outline-offset: 2px; }
 </style>
@@ -85,6 +90,7 @@ DATA.forEach((q, i) => {
   }).join('');
   el.innerHTML = `<div class="frame"><img alt="${esc(q.alt)}" src="${q.img}"><span class="tc">${esc(q.tc)}</span><div class="ov"></div></div>
     <div class="body"><div class="eyebrow">${i + 1} · ${esc(q.where)}</div><h2>${esc(q.title)}</h2>${q.note ? `<p class="note">${esc(q.note)}</p>` : ''}
+    ${(q.audio || []).length ? `<div class="sounds">${q.audio.map(a => `<figure><figcaption>${esc(a.label)}</figcaption>${a.video ? `<video controls playsinline preload="metadata" src="${a.src}"></video>` : `<audio controls preload="metadata" src="${a.src}"></audio>`}</figure>`).join('')}</div>` : ''}
     <div class="opts">${opts}</div>
     <input class="other" id="q${i}other" placeholder="Or type your own" value="">
     ${q.links.length ? `<div class="links">${q.links.map(l => `<a href="${l.url}" target="_blank" rel="noopener">${esc(l.label)} ↗</a>`).join('')}</div>` : ''}</div>`;
@@ -109,6 +115,11 @@ function summarize() {
   const parts = DATA.map((q, i) => { const p = saved['q' + i] || { letter: 'A' }; return p.other ? `${i + 1}: "${p.other}"` : `${i + 1}${p.letter}`; });
   document.getElementById('summary').textContent = '/*LABEL*/: ' + parts.join(', ');
 }
+/* Keep the last question clear of the fixed picks bar, however tall the bar gets. */
+const barEl = document.querySelector('.bar');
+function fitBar() { document.documentElement.style.setProperty('--bar-h', barEl.offsetHeight + 'px'); }
+try { new ResizeObserver(fitBar).observe(barEl); } catch (e) {}
+addEventListener('resize', fitBar); fitBar();
 document.getElementById('copy').addEventListener('click', async () => {
   const t = document.getElementById('summary').textContent; const b = document.getElementById('copy');
   try { await navigator.clipboard.writeText(t); b.textContent = 'Copied'; }
