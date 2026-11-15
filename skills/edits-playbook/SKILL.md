@@ -1,6 +1,6 @@
 ---
 name: edits-playbook
-description: Instagram Edits (Mac) specifics for Video Edit Copilot - connecting its local MCP server, the helper scripts (cut builder, snapshot, diff, wait-until-idle, safe delete, export-true frames, clean graded frames, caption check, music and layer re-fit, ripple insert/extend, loudness-matched volume, and the sound check: waveform cuts, audio fades, audio render and sound scan), the colour recipe, music workflow, and the app's known quirks. Use whenever the copilot edits in Instagram Edits, or when an Edits tool call behaves unexpectedly.
+description: Instagram Edits (Mac) specifics for Video Edit Copilot - connecting its local MCP server, the helper scripts (cut builder, snapshot, diff, wait-until-idle, safe delete, export-true frames, clean graded frames, caption check, music and layer re-fit, ripple insert/extend, loudness-matched volume, and the sound-check scripts for waveform cuts, audio fades, audio render and sound scan), the colour recipe, music workflow, and the app's known quirks. Use whenever the copilot edits in Instagram Edits, or when an Edits tool call behaves unexpectedly.
 ---
 
 # Instagram Edits playbook
